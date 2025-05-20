@@ -3,21 +3,30 @@ using System.Diagnostics;
 
 class Program
 {
-   static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        Console.WriteLine("\n--- Default Constructor ---");
-        Car car1 = new Car();
-        car1.Display();
+        Console.WriteLine($"[Main] Thread ID: {Thread.CurrentThread.ManagedThreadId}");
 
-        Console.WriteLine("\n--- Parameterized Constructor ---");
-        Car car2 = new Car("BMW", "X5");
-        car2.Display();
+        await WithConfigureAwaitTrue();
 
-        Console.WriteLine("\n--- Copy Constructor ---");
-        Car car3 = new Car(car2);
-        car3.Display();
+        await WithConfigureAwaitFalse();
+    }
 
-        Console.WriteLine("\n--- Private Constructor via Static Method ---");
-        Car special = Car.CreateSpecialCar();
+    static async Task WithConfigureAwaitTrue()
+    {
+        Console.WriteLine($"\n[WithConfigureAwait(true)] Started on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+
+        await Task.Delay(10000).ConfigureAwait(true);
+
+        Console.WriteLine($"[WithConfigureAwait(true)] Continued on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+    }
+
+    static async Task WithConfigureAwaitFalse()
+    {
+        Console.WriteLine($"\n[WithConfigureAwait(false)] Started on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+
+        await Task.Delay(10000).ConfigureAwait(false);
+
+        Console.WriteLine($"[WithConfigureAwait(false)] Continued on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
     }
 }
