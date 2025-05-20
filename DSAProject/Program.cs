@@ -3,30 +3,16 @@ using System.Diagnostics;
 
 class Program
 {
-    static async Task Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine($"[Main] Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+        int x = 10, y = 20;
+        Console.WriteLine($"Before: x = {x}, y = {y}");
+        Utility.Swap<int>(ref x, ref y);
+        Console.WriteLine($"After: x = {x}, y = {y}");
 
-        await WithConfigureAwaitTrue();
-
-        await WithConfigureAwaitFalse();
-    }
-
-    static async Task WithConfigureAwaitTrue()
-    {
-        Console.WriteLine($"\n[WithConfigureAwait(true)] Started on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
-
-        await Task.Delay(10000).ConfigureAwait(true);
-
-        Console.WriteLine($"[WithConfigureAwait(true)] Continued on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
-    }
-
-    static async Task WithConfigureAwaitFalse()
-    {
-        Console.WriteLine($"\n[WithConfigureAwait(false)] Started on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
-
-        await Task.Delay(10000).ConfigureAwait(false);
-
-        Console.WriteLine($"[WithConfigureAwait(false)] Continued on Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+        string a = "Hello", b = "World";
+        Console.WriteLine($"Before: a = {a}, b = {b}");
+        Utility.Swap<string>(ref a, ref b);
+        Console.WriteLine($"After: a = {a}, b = {b}");
     }
 }
